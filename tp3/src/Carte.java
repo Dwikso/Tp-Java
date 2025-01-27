@@ -36,6 +36,6 @@ public class Carte {
    * Méthode pour afficher la carte
    */
   public void afficher() {
-    System.out.println("Carte de " + rang + " de couleur " + couleur);
+    System.out.println(rang + " de " + couleur);
   }
 }
