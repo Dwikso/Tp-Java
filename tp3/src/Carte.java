@@ -6,12 +6,12 @@
  */
 
 public class Carte {
-  private final Hauteur rang;
-  private final Couleur couleur;
+  private final Hauteur rang; // le rang de la carte
+  private final Couleur couleur; // la couleur de la carte
 
   public Carte(Hauteur rang, Couleur couleur) {
-    this.rang = rang;
-    this.couleur = couleur;
+    this.rang = rang; // initialisation du rang de la carte
+    this.couleur = couleur; // initialisation de la couleur de la carte
   }
 
   /*
@@ -20,7 +20,7 @@ public class Carte {
    * @return le rang de la carte
    */
   public Hauteur getRang() {
-    return rang;
+    return this.rang;
   }
 
   /*
@@ -34,8 +34,11 @@ public class Carte {
 
   /*
    * Méthode pour afficher la carte
+   * 
+   * @return une chaîne de caractères représentant la carte
    */
-  public void afficher() {
-    System.out.println(rang + " de " + couleur);
+  @Override
+  public String toString() {
+    return rang + " de " + couleur;
   }
 }

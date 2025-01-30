@@ -1,6 +1,13 @@
+/*
+ * Classe DemoFileDeCartes
+ *
+ * @author Pellosse Quentin
+ * @version 1.0
+ */
+
 public class DemoFileDeCartes {
   public static void main(String[] args) {
-    FileDeCartes file = new FileDeCartes();
+    FileDeCartes file = new FileDeCartes(); // Création d'un fichier de cartes
 
     // Ajouter des cartes à la pile
     file.ajouter("As de Coeur");

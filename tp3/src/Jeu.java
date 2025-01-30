@@ -1,3 +1,5 @@
+import java.util.Random;
+
 /*
  * Classe Jeu
  *
@@ -9,6 +11,8 @@ public class Jeu {
 
   // Tableau de cartes
   private final Carte[] cartes;
+  private final Random random = new Random();
+  private int indexCarte;
 
   /*
    * Constructeur de la classe Jeu
@@ -17,7 +21,6 @@ public class Jeu {
     cartes = new Carte[52];
     int index = 0;
 
-    // Remplissage du tableau de cartes
     for (Hauteur hauteur : Hauteur.values()) {
       for (Couleur couleur : Couleur.values()) {
         cartes[index] = new Carte(hauteur, couleur);
@@ -34,4 +37,29 @@ public class Jeu {
       carte.afficher();
     }
   }
+
+  /**
+   * Méthode pour mélanger les cartes
+   */
+  public void melanger() {
+    for (int i = 0; i < cartes.length; i++) {
+      int index = i + random.nextInt(cartes.length - i);
+      Carte temp = cartes[i];
+      cartes[i] = cartes[index];
+      cartes[index] = temp;
+    }
+  }
+
+  /*
+   * Méthode pour retirer une carte
+   * 
+   * @return la carte retirée
+   */
+  public Carte retirerCarte() {
+    if (indexCarte < cartes.length) {
+      return cartes[indexCarte++];
+    }
+    return null;
+  }
+
 }

@@ -1,6 +1,13 @@
+/*
+ * Classe DemoPileDeCartes
+ *
+ * @author Pellosse Quentin
+ * @version 1.0
+ */
+
 public class DemoPileDeCartes {
   public static void main(String[] args) {
-    PileDeCartes pile = new PileDeCartes();
+    PileDeCartes pile = new PileDeCartes(); // Création d'une pile de cartes
 
     // Ajouter des cartes à la pile
     pile.ajouter("As de Coeur");

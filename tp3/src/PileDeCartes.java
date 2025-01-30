@@ -2,52 +2,72 @@
  * PileDeCartes
  *
  * @author Pellosse Quentin
- * @version 1.1
+ * @version 1.0
  */
 public class PileDeCartes {
-  private String[] pile;
+  private Carte[] pile;
   private static final int CAPACITE_MAX = 52;
-  private int sommet; // Indique l'indice où la prochaine carte sera ajoutée
+  private int sommet;
 
-  // Constructeur
+  /*
+   * Constructeur de la classe PileDeCartes
+   */
   public PileDeCartes() {
-    pile = new String[CAPACITE_MAX];
-    sommet = 0; // Initialise la pile comme vide
+    pile = new Carte[CAPACITE_MAX];
+    sommet = 0;
   }
 
-  // Ajouter une carte sur le sommet de la pile
-  public void ajouter(String carte) {
+  /**
+   * Méthode pour ajouter une carte à la pile
+   * 
+   * @param carte la carte à ajouter
+   */
+  public void ajouter(Carte carte) {
     if (sommet >= CAPACITE_MAX) {
       System.out.println("Erreur : la pile est pleine");
       return;
     }
-    pile[sommet] = carte; // Ajoute la carte à l'indice sommet
-    sommet++; // Augmente le sommet
+    pile[sommet] = carte;
+    sommet++;
   }
 
-  // Retirer la carte au sommet de la pile
-  public String retirerCarte() {
+  /**
+   * Méthode pour retirer une carte de la pile
+   * 
+   * @return la carte retirée
+   */
+  public Carte retirerCarte() {
     if (estVide()) {
       System.out.println("Erreur : la pile est vide");
-      return null; // Retourne null si la pile est vide
+      return null;
     }
-    sommet--; // Réduit le sommet
-    String carte = pile[sommet]; // Récupère la carte au sommet
-    pile[sommet] = null; // Supprime la référence pour libérer de la mémoire
+    sommet--;
+    Carte carte = pile[sommet];
+    pile[sommet] = null;
     return carte;
   }
 
-  // Vérifier si la pile est vide
+  /**
+   * Méthode pour vérifier si la pile est vide
+   * 
+   * @return true si la pile est vide, false sinon
+   */
   public boolean estVide() {
     return sommet == 0;
   }
 
-  // Obtenir le nombre actuel de cartes dans la pile
+  /**
+   * Méthode pour obtenir la taille de la pile
+   * 
+   * @return la taille de la pile
+   */
   public int taille() {
     return sommet;
   }
 
-  // Afficher les cartes dans la pile (optionnel, utile pour débogage)
+  /**
+   * Méthode pour afficher la pile
+   */
   public void afficherPile() {
     if (estVide()) {
       System.out.println("La pile est vide");

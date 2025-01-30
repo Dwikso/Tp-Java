@@ -13,11 +13,11 @@ public enum Hauteur {
   ROI(13),
   AS(14);
 
-  private final int valeur;
+  private final int valeur; // rang de la carte
 
   /*
    * Constructeur de la classe Hauteur
-   * 
+   *
    * @param valeur le rang de la carte
    */
   private Hauteur(int valeur) {
@@ -29,6 +29,7 @@ public enum Hauteur {
    * 
    * @return le rang de la carte
    */
+  @Override
   public String toString() {
     return this.name();
   }
