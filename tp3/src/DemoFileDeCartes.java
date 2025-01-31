@@ -9,15 +9,17 @@ public class DemoFileDeCartes {
   public static void main(String[] args) {
     FileDeCartes file = new FileDeCartes(); // Création d'une file de cartes
 
-    // Ajouter des cartes en utilisant des objets Carte (et non des String)
     file.ajouter(new Carte(Hauteur.AS, Couleur.PIQUE));
     file.ajouter(new Carte(Hauteur.DEUX, Couleur.COEUR));
     file.ajouter(new Carte(Hauteur.TROIS, Couleur.CARREAU));
 
-    // Afficher la file
+    // Afficher la file avant retrait
     file.afficherFile();
 
-    // Retirer une carte et l'afficher
+    System.out.println("Carte retirée : " + file.retirerCarte());
+
+    file.afficherFile();
+
     System.out.println("Carte retirée : " + file.retirerCarte());
 
     // Afficher la file après retrait
