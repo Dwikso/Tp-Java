@@ -19,8 +19,8 @@ public class DemoCarte {
     Carte carte3 = new Carte(Hauteur.TROIS, Couleur.CARREAU);
 
     // Affichage des cartes
-    carte.afficher();
-    carte2.afficher();
-    carte3.afficher();
+    carte.toString();
+    carte2.toString();
+    carte3.toString();
   }
 }

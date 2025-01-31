@@ -7,26 +7,26 @@
 
 public class DemoFileDeCartes {
   public static void main(String[] args) {
-    FileDeCartes file = new FileDeCartes(); // Création d'un fichier de cartes
+    FileDeCartes file = new FileDeCartes(); // Création d'une file de cartes
 
-    // Ajouter des cartes à la pile
-    file.ajouter("As de Coeur");
-    file.ajouter("Roi de Pique");
-    file.ajouter("Dame de Trèfle");
+    // Ajouter des cartes en utilisant des objets Carte (et non des String)
+    file.ajouter(new Carte(Hauteur.AS, Couleur.PIQUE));
+    file.ajouter(new Carte(Hauteur.DEUX, Couleur.COEUR));
+    file.ajouter(new Carte(Hauteur.TROIS, Couleur.CARREAU));
 
-    // Afficher la pile
+    // Afficher la file
     file.afficherFile();
 
-    // Retirer une carte
+    // Retirer une carte et l'afficher
     System.out.println("Carte retirée : " + file.retirerCarte());
 
-    // Afficher la pile après le retrait
+    // Afficher la file après retrait
     file.afficherFile();
 
-    // Vérifier la taille de la pile
-    System.out.println("Nombre de cartes dans la pile : " + file.taille());
+    // Vérifier la taille de la file
+    System.out.println("Nombre de cartes dans la file : " + file.taille());
 
-    // Vérifier si la pile est vide
-    System.out.println("La pile est vide : " + file.estVide());
+    // Vérifier si la file est vide
+    System.out.println("La file est vide : " + file.estVide());
   }
 }

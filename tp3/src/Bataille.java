@@ -5,6 +5,9 @@
  * @version 1.1
  */
 
+/**
+ * Classe de la bataille.
+ */
 public class Bataille {
     private FileDeCartes joueur1;
     private FileDeCartes joueur2;
@@ -27,6 +30,9 @@ public class Bataille {
         }
     }
 
+    /**
+     * Joue tour.
+     */
     public void jouerTour() {
         if (joueur1.estVide() || joueur2.estVide()) {
             return;
@@ -58,6 +64,9 @@ public class Bataille {
         System.out.println();
     }
 
+    /*
+     * Gestion de la bataille.
+     */
     private void gererBataille() {
         // Chaque joueur doit poser une carte face cachée, puis une autre face visible
         if (joueur1.taille() < 2 || joueur2.taille() < 2) {
@@ -94,6 +103,9 @@ public class Bataille {
         }
     }
 
+    /**
+     * Joue une partie.
+     */
     public void jouerPartie() {
         while (!joueur1.estVide() && !joueur2.estVide()) {
             jouerTour();
@@ -106,14 +118,36 @@ public class Bataille {
         }
     }
 
+    /*
+     * Recupere les cartes retournées.
+     */
     private void recupererCartes(FileDeCartes joueur) {
         while (!cartesRetournees.estVide()) {
             joueur.ajouter(cartesRetournees.retirerCarte());
         }
     }
 
-    public static void main(String[] args) {
-        Bataille bataille = new Bataille();
-        bataille.jouerPartie();
+    public FileDeCartes getJoueur1() {
+        return joueur1;
+    }
+
+    public void setJoueur1(FileDeCartes joueur1) {
+        this.joueur1 = joueur1;
+    }
+
+    public FileDeCartes getJoueur2() {
+        return joueur2;
+    }
+
+    public void setJoueur2(FileDeCartes joueur2) {
+        this.joueur2 = joueur2;
+    }
+
+    public PileDeCartes getCartesRetournees() {
+        return cartesRetournees;
+    }
+
+    public void setCartesRetournees(PileDeCartes cartesRetournees) {
+        this.cartesRetournees = cartesRetournees;
     }
 }

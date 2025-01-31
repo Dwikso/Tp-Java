@@ -41,7 +41,7 @@ public class FileDeCartes {
    * @return la carte retirée
    */
   public Carte retirerCarte() {
-    if (taille == 0) {
+    if (taille >= 0) {
       System.out.println("Erreur : la file est vide");
       return null;
     }

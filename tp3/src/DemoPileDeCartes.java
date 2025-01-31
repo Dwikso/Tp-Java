@@ -10,9 +10,9 @@ public class DemoPileDeCartes {
     PileDeCartes pile = new PileDeCartes(); // Création d'une pile de cartes
 
     // Ajouter des cartes à la pile
-    pile.ajouter("As de Coeur");
-    pile.ajouter("Roi de Pique");
-    pile.ajouter("Dame de Trèfle");
+    pile.ajouter(new Carte(Hauteur.AS, Couleur.PIQUE));
+    pile.ajouter(new Carte(Hauteur.DEUX, Couleur.COEUR));
+    pile.ajouter(new Carte(Hauteur.TROIS, Couleur.CARREAU));
 
     // Afficher la pile
     pile.afficherPile();

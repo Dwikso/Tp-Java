@@ -34,7 +34,7 @@ public class Jeu {
    */
   public void afficher() {
     for (Carte carte : cartes) {
-      carte.afficher();
+      carte.toString();
     }
   }
 

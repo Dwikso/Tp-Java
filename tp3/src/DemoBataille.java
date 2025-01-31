@@ -5,6 +5,9 @@
  * @version 1.0
  */
 
+/*
+ * Classe de démonstration de la classe Bataille
+ */
 public class DemoBataille {
     public static void main(String[] args) {
         Bataille bataille = new Bataille();
