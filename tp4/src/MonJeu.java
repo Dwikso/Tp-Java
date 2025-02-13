@@ -13,63 +13,178 @@ public class MonJeu implements IJeuDesBilles {
     private int[] nouvellesCouleurs;
     private int nbBillesAjoutees;
     private int score = 0;
+    private static final int VIDE = -1;
 
     public MonJeu() {
+        this.nbBillesAjoutees = 3;
         grille = new int[taille][taille];
         for (int i = 0; i < taille; i++) {
             for (int j = 0; j < taille; j++) {
-                grille[i][j] = -1; // -1 signifie que la case est vide
+                grille[i][j] = VIDE;
             }
         }
         genererNouvellesCouleurs();
         ajouterBillesAleatoires(5);
     }
 
+    public void supprimerAllignement(int x1, int y1, int x2, int y2) {
+
+    }
+
+    public int getCouleur(int lig, int col) {
+        return grille[lig][col];
+    }
+
+    public int getNbBillesAjoutees() {
+        return 3;
+    }
+
+    public int getNbColonnes() {
+        return taille;
+    }
+
+    public int getNbCouleurs() {
+        return couleursUtilisees;
+    }
+
+    public int getNbLignes() {
+        return taille;
+    }
+
+    public int getScore() {
+        return score;
+    }
+
+    public int[] getNouvellesCouleurs() {
+        return nouvellesCouleurs;
+    }
+
     private void ajouterBillesAleatoires(int nombreDeBilles) {
         for (int n = 0; n < nombreDeBilles; n++) {
             int x, y;
-            // Trouver une case vide pour ajouter une bille
             do {
                 x = random.nextInt(taille);
                 y = random.nextInt(taille);
-            } while (grille[x][y] != -1); // S'assurer que la case est vide
+            } while (grille[x][y] != VIDE);
 
-            // Générer une couleur aléatoire parmi les couleurs disponibles
             int couleur = nouvellesCouleurs[n % nouvellesCouleurs.length];
             grille[x][y] = couleur;
 
-            nbBillesAjoutees++; // Incrémenter le nombre de billes ajoutées
+            System.out.println("Bille ajoutée à (" + x + "," + y + ") avec la couleur " + couleur);
+            nbBillesAjoutees++;
         }
-        genererNouvellesCouleurs(); // Générer de nouvelles couleurs après l'ajout des billes
+        genererNouvellesCouleurs();
     }
 
     private void genererNouvellesCouleurs() {
         nouvellesCouleurs = new int[3];
-        // Générer des couleurs aléatoires pour les prochaines billes
         for (int i = 0; i < 3; i++) {
-            nouvellesCouleurs[i] = random.nextInt(couleursUtilisees); // Assurez-vous de respecter le nombre de couleurs
+            nouvellesCouleurs[i] = random.nextInt(couleursUtilisees);
         }
     }
 
     public List<Point> deplace(int x1, int y1, int x2, int y2) {
         List<Point> casesModifiees = new ArrayList<>();
 
-        // Vérifier si le déplacement est valide (case source occupée et case cible
-        // vide)
-        if (grille[x1][y1] != -1 && grille[x2][y2] == -1) {
-            // Déplacer la bille
-            grille[x2][y2] = grille[x1][y1];
-            grille[x1][y1] = -1;
+        if (grille[x1][y1] != VIDE && grille[x2][y2] == VIDE) {
+            if (x1 == x2 || y1 == y2) {
+                grille[x2][y2] = grille[x1][y1];
+                grille[x1][y1] = VIDE;
 
-            // Ajouter les cases modifiées
-            casesModifiees.add(new Point(x1, y1));
-            casesModifiees.add(new Point(x2, y2));
+                casesModifiees.add(new Point(x1, y1));
+                casesModifiees.add(new Point(x2, y2));
 
-            // Ajouter des billes après le déplacement
-            ajouterBillesAleatoires(3);
+                int saveScore = score;
+
+                supprimerAlignements();
+
+                if (saveScore == score) {
+                    ajouterBillesAleatoires(3);
+                }
+
+            }
         }
 
-        return casesModifiees;
+        return getCasesModifiees();
+    }
+
+    private void supprimerAlignements() {
+        boolean[][] aSupprimer = new boolean[taille][taille];
+        int totalBillesSupprimees = 0;
+
+        for (int i = 0; i < taille; i++) {
+            for (int j = 0; j <= taille - 5; j++) {
+                int couleur = grille[i][j];
+                if (couleur != VIDE && couleur == grille[i][j + 1] && couleur == grille[i][j + 2] &&
+                        couleur == grille[i][j + 3] && couleur == grille[i][j + 4]) {
+                    for (int k = 0; k < 5; k++)
+                        aSupprimer[i][j + k] = true;
+                }
+            }
+        }
+
+        for (int j = 0; j < taille; j++) {
+            for (int i = 0; i <= taille - 5; i++) {
+                int couleur = grille[i][j];
+                if (couleur != VIDE && couleur == grille[i + 1][j] && couleur == grille[i + 2][j] &&
+                        couleur == grille[i + 3][j] && couleur == grille[i + 4][j]) {
+                    for (int k = 0; k < 5; k++)
+                        aSupprimer[i + k][j] = true;
+                }
+            }
+        }
+
+        for (int i = 0; i < taille; i++) {
+            for (int j = 0; j < taille; j++) {
+                if (aSupprimer[i][j]) {
+                    grille[i][j] = VIDE;
+                    totalBillesSupprimees++;
+                }
+            }
+        }
+
+        if (totalBillesSupprimees > 0) {
+            score += totalBillesSupprimees * 2;
+            System.out.println("Alignement supprimé ! Score : " + score);
+        }
+    }
+
+    private boolean cheminLibre(int x1, int y1, int x2, int y2) {
+        if (x1 == x2) {
+            if (y1 < y2) {
+                for (int j = y1 + 1; j < y2; j++) {
+                    if (grille[x1][j] != VIDE) {
+                        return false;
+                    }
+                }
+            } else {
+                for (int j = y1 - 1; j > y2; j--) {
+                    if (grille[x1][j] != VIDE) {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+        if (y1 == y2) {
+            if (x1 < x2) {
+                for (int i = x1 + 1; i < x2; i++) {
+                    if (grille[i][y1] != VIDE) {
+                        return false;
+                    }
+                }
+            } else {
+                for (int i = x1 - 1; i > x2; i--) {
+                    if (grille[i][y1] != VIDE) {
+                        return false;
+                    }
+                }
+            }
+            return true;
+        }
+
+        return false;
     }
 
     public List<Point> getCasesModifiees() {
@@ -82,62 +197,26 @@ public class MonJeu implements IJeuDesBilles {
         return toutesLesCases;
     }
 
-    public int[] getNouvellesCouleurs() {
-        return nouvellesCouleurs;
-    }
-
-    @Override
     public void reinit() {
+        score = 0;
         grille = new int[taille][taille];
         for (int i = 0; i < taille; i++) {
             for (int j = 0; j < taille; j++) {
-                grille[i][j] = -1; // Réinitialiser toutes les cases à vide
+                grille[i][j] = VIDE;
             }
         }
         genererNouvellesCouleurs();
-        ajouterBillesAleatoires(5); // Ajouter 5 billes au démarrage
+        ajouterBillesAleatoires(5);
     }
 
-    @Override
-    public int getCouleur(int lig, int col) {
-        return grille[lig][col]; // Retourner l'indice de la couleur (int)
-    }
-
-    @Override
-    public int getNbBillesAjoutees() {
-        return nbBillesAjoutees; // Retourner le nombre total de billes ajoutées
-    }
-
-    @Override
-    public int getNbColonnes() {
-        return taille; // Retourner le nombre de colonnes (taille de la grille)
-    }
-
-    @Override
-    public int getNbCouleurs() {
-        return couleursUtilisees; // Retourner le nombre de couleurs utilisées
-    }
-
-    @Override
-    public int getNbLignes() {
-        return taille; // Retourner le nombre de lignes (taille de la grille)
-    }
-
-    @Override
-    public int getScore() {
-        return score; // Retourner le score (à implémenter selon votre logique)
-    }
-
-    @Override
     public boolean partieFinie() {
-        // Vérifier si la partie est terminée (plus aucune case vide)
         for (int i = 0; i < taille; i++) {
             for (int j = 0; j < taille; j++) {
-                if (grille[i][j] == -1) { // Si une case est vide
+                if (grille[i][j] == VIDE) {
                     return false;
                 }
             }
         }
-        return true; // Partie terminée si aucune case n'est vide
+        return true;
     }
 }

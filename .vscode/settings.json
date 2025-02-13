@@ -1,6 +1,6 @@
 {
     "java.project.referencedLibraries": [
         "lib/**/*.jar",
-        "bin/guilines.jar"
+        "tp4/bin/guilines.jar"
     ]
 }
