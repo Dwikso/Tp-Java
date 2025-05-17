@@ -20,17 +20,18 @@ public class MaPremiereAppliGraphique {
 
     // Tableau d'ImageIcons initialisé avec les URLs des images
     public static final ImageIcon[] TABIMAGES = {
-        new ImageIcon(url),
-        new ImageIcon(url2),
-        new ImageIcon(url3),
-        new ImageIcon(url4),
-        new ImageIcon(url5),
-        new ImageIcon(url6),
-        new ImageIcon(url7)
+            new ImageIcon(url),
+            new ImageIcon(url2),
+            new ImageIcon(url3),
+            new ImageIcon(url4),
+            new ImageIcon(url5),
+            new ImageIcon(url6),
+            new ImageIcon(url7)
     };
 
     /**
      * Méthode principale qui crée la fenêtre et le bouton avec une icône aléatoire.
+     * 
      * @param args Arguments de la ligne de commande (non utilisés).
      */
     public static void main(String[] args) {

@@ -1,44 +1,70 @@
-package vueTexte;
+package vueText;
 
-import modele.Carte;
-import modele.Direction;
-import modele.Lecture;
-
-import java.util.List;
 import java.util.Scanner;
+import modele.Carte;
+import modele.Lecture;
+import modele.Direction;
 
+/**
+ * Classe représentant l'interface en mode texte du jeu Sokoban
+ * Permet de jouer au jeu via la console
+ */
 public class SokobanTexte {
-  public static void main(String[] args) {
-    List<String> carteLignes = Lecture.lireCarte("bin/map/map1.txt");
-    Carte carte = new Carte(carteLignes);
+  private Carte carte; // La carte du jeu
+
+  /**
+   * Constructeur initialisant le jeu avec une carte
+   * 
+   * @param fichierCarte Chemin du fichier contenant la carte
+   */
+  public SokobanTexte(String fichierCarte) {
+    carte = new Carte(Lecture.lireCarte(fichierCarte));
+  }
+
+  /**
+   * Démarre la partie en mode texte
+   * Gère la boucle de jeu et les entrées utilisateur
+   */
+  public void jouer() {
     Scanner scanner = new Scanner(System.in);
+    boolean partieEnCours = true;
 
-    while (true) {
+    while (partieEnCours) {
+      // Affichage de la carte
       carte.afficherCarte();
-      System.out.println("Déplacez-vous avec Z (haut), S (bas), Q (gauche), D (droite) ou X pour quitter : ");
-      char input = scanner.next().charAt(0);
 
-      Direction direction = null;
-      switch (Character.toUpperCase(input)) {
-        case 'Z' -> direction = Direction.HAUT;
-        case 'S' -> direction = Direction.BAS;
-        case 'Q' -> direction = Direction.GAUCHE;
-        case 'D' -> direction = Direction.DROITE;
-        case 'X' -> {
-          System.out.println("Fin du jeu !");
-          return;
-        }
+      // Vérification si le niveau est terminé
+      if (carte.estTerminee()) {
+        System.out.println("Niveau terminé !");
+        partieEnCours = false;
+        continue;
+      }
+
+      // Lecture de la commande du joueur
+      System.out.print("Entrez une commande (h: haut, b: bas, g: gauche, d: droite, q: quitter) : ");
+      String commande = scanner.nextLine();
+
+      // Traitement de la commande
+      switch (commande.toLowerCase()) {
+        case "h" -> carte.deplacerJoueur(Direction.HAUT);
+        case "b" -> carte.deplacerJoueur(Direction.BAS);
+        case "g" -> carte.deplacerJoueur(Direction.GAUCHE);
+        case "d" -> carte.deplacerJoueur(Direction.DROITE);
+        case "q" -> partieEnCours = false;
         default -> System.out.println("Commande invalide !");
       }
-
-      if (direction != null) {
-        carte.deplacerJoueur(direction);
-      }
-      if (carte.estTerminee()) {
-        carte.afficherCarte();
-        System.out.println("Fin du jeu !");
-        return;
-      }
     }
+
+    scanner.close();
+  }
+
+  /**
+   * Point d'entrée du programme en mode texte
+   * 
+   * @param args Arguments de la ligne de commande (non utilisés)
+   */
+  public static void main(String[] args) {
+    SokobanTexte jeu = new SokobanTexte("bin/map/map1.txt");
+    jeu.jouer();
   }
 }
